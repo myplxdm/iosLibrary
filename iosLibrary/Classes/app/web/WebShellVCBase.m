@@ -65,6 +65,19 @@
     [self activeWebPluginEvent:EVENT_INIT data:data];
 }
 
+- (void)onWillEnter
+{
+    id pWeb = [_webView getWebView];
+    if ([pWeb isKindOfClass:LWebViewEx.class])
+    {
+        LWebViewEx * web = (LWebViewEx *)[_webView getWebView];
+        if (web.title == nil)
+        {
+            [web reloadEx];
+        }
+    }
+}
+
 -(void)onVCResult:(NSDictionary *)data
 {
     if (data)
@@ -99,6 +112,8 @@
         case EVENT_EXEC:
             for (id<IWebPlugin> plg in _plugins)
             {
+                NSString * ss = data[FUN_NAME];
+                ss = data[CALL_BACK];
                 if ([plg execWithFunName:data[FUN_NAME] param:data callback:data[CALL_BACK]]) break;
             }
             break;

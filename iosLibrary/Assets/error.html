@@ -59,7 +59,7 @@
 			}else{
                 // var url = "ios:exec:[{\"method\":\"reload\"}]";
 				//document.location = url;
-			  	window.webkit.messageHandlers.exec.postMessage(JSON.stringify({"method":"reload"}));
+			  	window.webkit.messageHandlers.exec.postMessage(JSON.stringify([{"method":"reload"}]));
 			}
 		}
 	</script>

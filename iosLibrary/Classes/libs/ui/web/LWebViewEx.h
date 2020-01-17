@@ -10,6 +10,10 @@
 #import <WebKit/WebKit.h>
 #import "WebViewDelegate.h"
 
+@interface WKProcessPool (SharedProcessPool)
++ (WKProcessPool*)sharedProcessPool;
+@end
+
 API_AVAILABLE(ios(8.0))
 @interface LWebViewEx : WKWebView<IWebView>
 

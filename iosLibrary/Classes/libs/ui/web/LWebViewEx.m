@@ -14,6 +14,21 @@
 #import <WebKit/WKScriptMessageHandler.h>
 #import "BaseAppVC.h"
 
+@implementation WKProcessPool (SharedProcessPool)
+
++ (WKProcessPool*)sharedProcessPool
+{
+    static WKProcessPool* SharedProcessPool;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+
+        SharedProcessPool = [[WKProcessPool alloc] init];
+
+    });
+    return SharedProcessPool;
+}
+@end
+
 @interface LWebViewEx()<WKScriptMessageHandler,WKUIDelegate, WKNavigationDelegate>
 {
     NSMutableArray                  * jsNameList;
@@ -64,7 +79,7 @@
     
     // 是使用h5的视频播放器在线播放, 还是使用原生播放器全屏播放
     config.allowsInlineMediaPlayback = YES;
-    
+    config.processPool = [WKProcessPool sharedProcessPool];
     if (@available(iOS 9.0, *))
     {
         //设置视频是否需要用户手动播放  设置为NO则会允许自动播放
@@ -98,7 +113,7 @@
 
 -(void)loadUrl:(NSString *)url
 {
-    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL * nurl = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nurl];
     NSString * cookie = [self getCurrentCookieWithDomain:[nurl host]];
@@ -189,6 +204,18 @@
 }
 
 #pragma mask ---------- cookie
+
+//-(void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+//
+//    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+//    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+//    for (NSHTTPCookie *cookie in cookies) {
+//        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+//    }
+//
+//    decisionHandler(WKNavigationResponsePolicyAllow); // 必须实现 加载
+//}
+
 -(NSString *)getCurrentCookieWithDomain:(NSString *)domain
 {
     NSHTTPCookieStorage * cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
