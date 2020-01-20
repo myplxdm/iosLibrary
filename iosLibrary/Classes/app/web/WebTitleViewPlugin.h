@@ -31,6 +31,10 @@
 #define TV_SHOW_RETURN      @"isShowReturn"
 #define P_IS_SHOW           @"isShow"
 //
+#define TV_SHOW_BADGE       @"showBadge"
+#define P_INDEX             @"index"
+#define P_BADGE_COUNT       @"badgeCount"
+//
 #define BTN_TYPE_NORMAL     0
 #define BTN_TYPE_PK         1//不使用
 #define BTN_TYPE_JS         2

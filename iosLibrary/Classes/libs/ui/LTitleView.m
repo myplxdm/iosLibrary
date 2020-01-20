@@ -11,6 +11,7 @@
 #import "UIView+UIViewHelper.h"
 #import "UIButton+WGBCustom.h"
 #import <UIImageView+WebCache.h>
+#import <WZLBadgeImport.h>
 
 @interface LTitleView()
 {
@@ -196,6 +197,19 @@
     line.widthSize.equalTo(self);
     line.bottomPos.equalTo(self);
     [self addSubview:line];
+}
+
+-(void)showBadgeCount:(NSInteger)count index:(NSInteger)index location:(NSInteger)tvl
+{
+    UIButton * view = (UIButton *) [self getViewWithIndex:index location:tvl];
+    if (count > -1)
+    {
+        view.badgeCenterOffset = CGPointMake(-8, 8);
+        [view showBadgeWithStyle:WBadgeStyleNumber value:count animationType:WBadgeAnimTypeNone];
+    } else
+    {
+        [view clearBadge];
+    }
 }
 
 #pragma --------------------------------------------------------

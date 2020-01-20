@@ -180,6 +180,10 @@
     {
         [tv showViewWithIndex:returnBtnIndex location:TVL_LEFT isShow:[param[P_IS_SHOW] boolValue]];
         isProc = YES;
+    } else if ([name isEqualToString:TV_SHOW_BADGE])
+    {
+        [tv showBadgeCount:[param[P_BADGE_COUNT] integerValue] index:[param[P_INDEX] integerValue] location:TVL_RIGHT];
+        isProc = YES;
     }
     isProc = isProc || !([self execOtherWithFunName:name param:param callback:cb] == EXEC_OTHER_NO_PROC);
     if (isProc)

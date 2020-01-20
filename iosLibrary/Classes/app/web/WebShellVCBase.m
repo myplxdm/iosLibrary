@@ -44,7 +44,7 @@
     _titleView.space = self.skinCfg.titleViewSpace;
     _titleView.lrSpace = self.skinCfg.titleViewLRSpace;
     //web
-    if (@available(iOS 8.0, *)) {
+    if (IOS_VERSION >= 8.0f && [self isUseWKWebView]) {
         _webView = [LWebViewEx get];
         [((LWebViewEx *)_webView) addJsFunNames:@[@"exec"]];
     } else {
@@ -56,6 +56,16 @@
     v.widthSize.equalTo(self.contentLayout);
     v.bottomPos.equalTo(self.contentLayout);
     _webView.jsDelegate = self;
+}
+
+-(BOOL)isUseWKWebView
+{
+    return YES;
+}
+
+-(BOOL)isCloseByReturnBtn
+{
+    return YES;
 }
 
 -(void)onInitData:(NSDictionary *)data
@@ -123,13 +133,16 @@
 #pragma -------------------------------------------------
 -(void)openUrl:(NSString *)url title:(NSString *)title bShowReturn:(BOOL)bShowReturn titleLocation:(NSUInteger)tl bNextSelfClose:(BOOL)bNextSelfClose
 {
-    NSDictionary * data = @{WS_URL:url,
-                            WS_TITLE:title,
-                            WS_SHOW_RETURN:@(bShowReturn),
-                            WS_TITLE_LOCATION:@(tl)
-                            };
-    self.showInfo.isNextCloseSelfColse = bNextSelfClose;
-    [BaseViewController showPresentClass:[self class] withVC:self data:data];
+    if ([self isCloseByReturnBtn])
+    {
+        NSDictionary * data = @{WS_URL:url,
+                                WS_TITLE:title,
+                                WS_SHOW_RETURN:@(bShowReturn),
+                                WS_TITLE_LOCATION:@(tl)
+                                };
+        self.showInfo.isNextCloseSelfColse = bNextSelfClose;
+        [BaseViewController showPresentClass:[self class] withVC:self data:data];
+    }
 }
 
 -(void)closeWindowWithLevel:(NSInteger)level bCloseReload:(BOOL)bCloseReload closeExecJs:(NSString *)js

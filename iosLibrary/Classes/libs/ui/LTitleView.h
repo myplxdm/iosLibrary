@@ -31,6 +31,7 @@
 -(UIView *)mdImageAsset:(NSString *)asset location:(NSInteger)tvl index:(NSInteger)index;
 -(UIView *)mdImageUrl:(NSString *)url location:(NSInteger)tvl index:(NSInteger)index;
 -(UIView *)mdText:(NSString *)text location:(NSInteger)tvl index:(NSInteger)index;
+-(void)showBadgeCount:(NSInteger)count index:(NSInteger)index location:(NSInteger)tvl;
 -(void)removeAllByLocation:(NSInteger)tvl;
 -(void)setBottomLineColor:(UIColor *)color lineHeight:(CGFloat)height;
 

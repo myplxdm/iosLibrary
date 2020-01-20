@@ -56,5 +56,7 @@
 +(void)openClass:(Class)cls url:(NSString *)url title:(NSString *)title bShowReturn:(BOOL)bShowReturn;
 -(NSString *)getTitleViewReturnBtn;
 -(void)loadWebPlugin;
+-(BOOL)isUseWKWebView;
+-(BOOL)isCloseByReturnBtn;
 
 @end
